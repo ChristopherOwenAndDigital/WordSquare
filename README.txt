@@ -7,7 +7,7 @@ from the IDE (try parameters 3 "aaccrrtty")
 To run from a command line:
 - cd to project root directory 'WordSquare'
 - run 'mvn clean package'
-- run target/WordSquareMaker-jar-with-dependencies.jar  3  "aaccrrtty"
+- run java -jar target/WordSquare-jar-with-dependencies.jar  3  "aaccrrtty"
 - This should produce a simple 3x3 word square with: act, car and try
 
 If you were to use "hhooortty" (for rot, ooh, thy) it would fail politely as
