@@ -21,7 +21,7 @@ public class WordSelector {
 
     public Deque<String> SelectWords() {
         Deque<String> selection = new LinkedList<>();
-        for(int i = 0; i < 2000; i++) {
+        for(int i = 0; i < 30000; i++) {
             selection.add(candidateWords.getFirst());
             collectWords(selection);
 

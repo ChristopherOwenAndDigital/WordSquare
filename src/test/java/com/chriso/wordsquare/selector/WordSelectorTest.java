@@ -43,20 +43,24 @@ public class WordSelectorTest {
     }
 
     @Test
-    public void testThreeByThreeWithLessEasyData() {
-        String characters = "hhooortty"; // for rot, ooh, thy
+    public void testFourByFour() {
+        String characters = "eeeeddoonnnsssrv"; // for rose, oven, send, ends
 
-        LinkedList<String> candidateWords = cache.loadFor(3, characters);
-        assertThat(candidateWords.size()).isGreaterThan(2);
+        LinkedList<String> candidateWords = cache.loadFor(4, characters);
+        assertThat(candidateWords.size()).isGreaterThan(3);
 
         WordSelector selector = new WordSelector(candidateWords, characters);
         assertNotNull(selector);
 
         Deque<String> chosenWords = selector.SelectWords();
-        assertThat(chosenWords.size()).isEqualTo(3);
-        assertThat(chosenWords.pop()).isEqualTo("rot");
-        assertThat(chosenWords.pop()).isEqualTo("ooh");
-        assertThat(chosenWords.pop()).isEqualTo("thy");
+        assertThat(chosenWords.size()).isEqualTo(4);
+        for (String chosenWord : chosenWords) {
+            System.out.println(chosenWord);
+        }
+        assertThat(chosenWords.pop()).isEqualTo("rose");
+        assertThat(chosenWords.pop()).isEqualTo("oven");
+        assertThat(chosenWords.pop()).isEqualTo("send");
+        assertThat(chosenWords.pop()).isEqualTo("ends");
     }
 
     @Test
