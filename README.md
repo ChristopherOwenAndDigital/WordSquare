@@ -9,10 +9,8 @@ To run from a command line:
 - run 'mvn clean package'
 - run java -jar target/WordSquare-jar-with-dependencies.jar  3  "aaccrrtty"
 - This should produce a simple 3x3 word square with: act, car and try
-
-If you were to use "hhooortty" (for rot, ooh, thy) it would fail politely as
-there is not yet the functionality to back out of failed combinations and get
-back on track.
+- If you use "hhooortty" it should give: rot, ooh, thy
+- If you use "aydeiloms" it will tell you it can't form a word square
 
 Chris O
 "Happy coding!"

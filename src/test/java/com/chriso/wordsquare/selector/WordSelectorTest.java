@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.Deque;
+import java.util.LinkedList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -27,10 +28,10 @@ public class WordSelectorTest {
     public void testThreeByThreeWithEasyData() {
         String characters = "aaccrrtty"; // for act, car, try
 
-        Deque<String> cacheList = cache.loadFor(3, characters);
-        assertThat(cacheList.size()).isGreaterThan(2);
+        LinkedList<String> candidateWords = cache.loadFor(3, characters);
+        assertThat(candidateWords.size()).isGreaterThan(2);
 
-        WordSelector selector = new WordSelector(cacheList, characters);
+        WordSelector selector = new WordSelector(candidateWords, characters);
         assertNotNull(selector);
 
         Deque<String> chosenWords = selector.SelectWords();
@@ -45,16 +46,32 @@ public class WordSelectorTest {
     public void testThreeByThreeWithLessEasyData() {
         String characters = "hhooortty"; // for rot, ooh, thy
 
-        Deque<String> cacheList = cache.loadFor(3, characters);
-        assertThat(cacheList.size()).isGreaterThan(2);
+        LinkedList<String> candidateWords = cache.loadFor(3, characters);
+        assertThat(candidateWords.size()).isGreaterThan(2);
 
-        WordSelector selector = new WordSelector(cacheList, characters);
+        WordSelector selector = new WordSelector(candidateWords, characters);
+        assertNotNull(selector);
+
+        Deque<String> chosenWords = selector.SelectWords();
+        assertThat(chosenWords.size()).isEqualTo(3);
+        assertThat(chosenWords.pop()).isEqualTo("rot");
+        assertThat(chosenWords.pop()).isEqualTo("ooh");
+        assertThat(chosenWords.pop()).isEqualTo("thy");
+    }
+
+    @Test
+    public void testThreeByThreeWithImpossibleData() {
+        String characters = "aydeiloms";
+
+        LinkedList<String> candidateWords = cache.loadFor(3, characters);
+        assertThat(candidateWords.size()).isGreaterThan(2);
+
+        WordSelector selector = new WordSelector(candidateWords, characters);
         assertNotNull(selector);
 
         Deque<String> chosenWords = selector.SelectWords();
         assertThat(chosenWords.size()).isEqualTo(1);
         assertThat(chosenWords.pop()).isEqualTo(
-                "Unable to form a word square for this using current version");
+                "Unable to form a word square for this set of letters");
     }
-
 }

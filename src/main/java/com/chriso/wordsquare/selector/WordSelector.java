@@ -2,42 +2,45 @@ package com.chriso.wordsquare.selector;
 
 import com.chriso.wordsquare.utility.LettersUtility;
 
+import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 
 public class WordSelector {
 
     private final int dimension;
-    private final Deque<String> cacheList;
+    private LinkedList<String> candidateWords;
     private final String characters;
 
 
-    public WordSelector(Deque<String> cacheList, String characters) {
+    public WordSelector(LinkedList<String> candidateWords, String characters) {
         this.dimension = (int) Math.sqrt(characters.length());
         this.characters = characters;
-        this.cacheList = cacheList;
+        this.candidateWords = candidateWords;
     }
 
     public Deque<String> SelectWords() {
         Deque<String> selection = new LinkedList<>();
-        for (String startWord : cacheList) {
-            selection.add(startWord);
-
+        for(int i = 0; i < 2000; i++) {
+            selection.add(candidateWords.getFirst());
             collectWords(selection);
 
             if (isIncomplete(selection)) {
                 selection = new LinkedList<>();
+                Collections.shuffle(this.candidateWords);
                 continue;
             }
 
             if (unusedLetters(selection)) {
                 selection = new LinkedList<>();
+                Collections.shuffle(this.candidateWords);
             } else {
+                System.out.println("Took " + i + " shuffles");
                 break;
             }
         }
         if (selection.isEmpty()) {
-            selection.add("Unable to form a word square for this using current version");
+            selection.add("Unable to form a word square for this set of letters");
         }
         return selection;
     }
@@ -56,7 +59,7 @@ public class WordSelector {
     private String findNextWord(Deque<String> selection) {
         String prefix = derivePrefix(selection);
         String returnWord = null;
-        for (String nextWord : cacheList) {
+        for (String nextWord : candidateWords) {
             if (nextWord.startsWith(prefix)) {
                 returnWord = nextWord;
                 break;
@@ -68,9 +71,7 @@ public class WordSelector {
     private String derivePrefix(Deque<String> selection) {
         StringBuilder sb = new StringBuilder();
         int pos = selection.size();
-        for (String word : selection) {
-            sb.append(word.charAt(pos));
-        }
+        selection.forEach(word -> sb.append(word.charAt(pos)));
         return sb.toString();
     }
 

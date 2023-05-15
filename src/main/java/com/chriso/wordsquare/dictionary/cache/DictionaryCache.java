@@ -3,7 +3,6 @@ package com.chriso.wordsquare.dictionary.cache;
 import com.chriso.wordsquare.dictionary.file.DictionaryReader;
 import com.chriso.wordsquare.utility.LettersUtility;
 
-import java.util.Deque;
 import java.util.LinkedList;
 
 public class DictionaryCache {
@@ -13,8 +12,8 @@ public class DictionaryCache {
         reader = new DictionaryReader(dictionaryFilePath);
     }
 
-    public Deque<String> loadFor(int dimension, String characters) {
-        Deque<String> cacheList = new LinkedList<>();
+    public LinkedList<String> loadFor(int dimension, String characters) {
+        LinkedList<String> cacheList = new LinkedList<>();
         String word = reader.readNextWord();
         while (word != null) {
             boolean include = isWordRelevant(word, dimension, characters);
@@ -36,11 +35,10 @@ public class DictionaryCache {
     }
 
     private boolean doWeHaveLettersFor(String word, String letters) {
-        for (int i=0; i < word.length(); i++) {
-            String curChar = String.valueOf(word.charAt(i));
-            int idx = letters.indexOf(curChar);
-            if (idx != -1) {
-                letters = LettersUtility.updateLetters(letters, idx);
+        String[] characters = word.split("");
+        for (String ch: characters) {
+            if (letters.contains(ch)) {
+                letters = LettersUtility.updateLetters(letters, letters.indexOf(ch));
             }
             else {
                 return false;

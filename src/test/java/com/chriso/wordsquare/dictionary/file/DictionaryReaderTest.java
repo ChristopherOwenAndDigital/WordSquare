@@ -31,8 +31,8 @@ public class DictionaryReaderTest {
         Assertions.assertThat(reader.readNextWord()).isNull();
     }
 
-    private void skipWords(int numberOfWordsToSkip) {
-        for (int i=0; i < numberOfWordsToSkip; i++) {
+    private void skipWords(int skips) {
+        for (int i=0; i < skips; i++) {
             reader.readNextWord();
         }
     }

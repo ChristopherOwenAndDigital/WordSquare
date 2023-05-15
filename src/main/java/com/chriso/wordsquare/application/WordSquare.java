@@ -4,6 +4,7 @@ import com.chriso.wordsquare.dictionary.cache.DictionaryCache;
 import com.chriso.wordsquare.selector.WordSelector;
 
 import java.util.Deque;
+import java.util.LinkedList;
 
 public class WordSquare {
 
@@ -14,9 +15,9 @@ public class WordSquare {
         int dimension = Integer.parseInt(args[0]);
         String letters = args[1];
 
-        Deque<String> cacheList = new DictionaryCache(DICTIONARY_PATH).loadFor(dimension, letters);
+        LinkedList<String> candidateWords = new DictionaryCache(DICTIONARY_PATH).loadFor(dimension, letters);
 
-        Deque<String> chosenWords = new WordSelector(cacheList, letters).SelectWords();
+        Deque<String> chosenWords = new WordSelector(candidateWords, letters).SelectWords();
 
         chosenWords.forEach(System.out::println);
     }
